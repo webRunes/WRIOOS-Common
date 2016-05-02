@@ -11,9 +11,7 @@ import session from 'express-session';
 import cookieParser from 'cookie-parser';
 import wrio_app from './wrio_app.js';
 
-export default function initserv(db) {
-
-    var app = express();
+export default function initserv(app,db) {
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));

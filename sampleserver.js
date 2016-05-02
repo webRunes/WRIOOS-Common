@@ -4,14 +4,16 @@
 import nconf from './server/wrio_nconf.js';
 import {server,db,utils,login} from './index.js';
 import logger from 'winston';
+import express from 'express';
 
 import index from './index.js';
 
+var app = express();
 
 async function init () {
     var dbInstance =  await db.init();
     logger.log('info','Successfuly connected to Mongo');
-    var app = server.initserv(dbInstance);
+    server.initserv(app,dbInstance);
 
     app.get('/', function (request, response) {
         response.send("Testing auth-free request");
