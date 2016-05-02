@@ -35,13 +35,6 @@ export function loginWithSessionId(request, done) {
   }
 }
 
-export function getTwitterCredentials(request) {
-
-    return {
-        "token": request.user.token,
-        "tokenSecret": request.user.tokenSecret
-    };
-}
 
 
 
