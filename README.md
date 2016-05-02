@@ -18,7 +18,7 @@ import {server,db,utils,login} from 'wriocommon';
 To connect to database
 
 ```
-var dbInstance =  await db.init();
+ var dbInstance =  await db.init();
 ```
 
 Then you can create express application
@@ -30,10 +30,10 @@ app.listen(nconf.get("server:port"));
 
 To authentificate request you can use wrioAuth middleware
 ```
-app.get('/wrio_test', login.wrioAuth, function (request, response) {
-     console.log(request.user);
-     response.send(JSON.stringify(request.user));
- });
+ app.get('/wrio_test', login.wrioAuth, function (request, response) {
+        console.log(request.user);
+        response.send(JSON.stringify(request.user));
+    });
 ``
 If user is found, request.user variable will be set. You can check 
 whether user is temporary by checking user.temporary flag.
