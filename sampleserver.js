@@ -2,7 +2,7 @@
  * Created by michbil on 02.05.16.
  */
 import nconf from './server/wrio_nconf.js';
-import {server,db,utils,login} from './index.js';
+import {server,db,utils,login} from './src/index.js';
 import logger from 'winston';
 import express from 'express';
 
