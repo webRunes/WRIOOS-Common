@@ -1,6 +1,5 @@
-import db from './utils/db';
+import db from '../utils/db';
 import nconf from 'nconf';
-import {Promise} from 'es6-promise';
 
 
 // used to deserialize the user
