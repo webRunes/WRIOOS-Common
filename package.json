@@ -38,12 +38,13 @@
     "nconf": "^0.8.2",
     "winston": "^2.1.1",
     "body-parser": "^1.14.1",
-    "connect-mongo": "^0.8.2"
-  },
-  "devDependencies": {
+    "connect-mongo": "^0.8.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.1.0",
     "gulp-nodemon": "^2.0.4"
+  },
+  "devDependencies": {
+
 
   }
 }
