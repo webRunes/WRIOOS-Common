@@ -1,6 +1,15 @@
 import db from '../utils/db';
 import nconf from 'nconf';
+import {dumpError} from "../utils/utils.js";
 
+function hasPassportUser(request) {
+    var sessionData = request.session;
+    if (sessionData.passport) {
+        if (sessionData.passport.user) {
+            return sessionData.passport.user;
+        }
+    }
+}
 
 // used to deserialize the user
 function deserialize(id, done) {
@@ -17,40 +26,13 @@ function deserialize(id, done) {
     });
 };
 
-export function loginWithSessionId(ssid, done) {
-    var sessions = db.db.collection('sessions');
-    var match = ssid.match(/^[-A-Za-z0-9+/=_]+$/m);
-    if (!match) {
-        console.log("Wrong ssid");
-        done("Error");
-        return;
-    }
-    console.log("Trying deserialize session",ssid);
-    sessions.findOne({"_id": ssid}, function(err, session) {
-        if (err || !session) {
-            console.log("User not found", err);
-            done(err);
-            return;
-        }
-
-        console.log("Session deserialized " + ssid, session);
-        var data = JSON.parse(session.session);
-        if (data.passport) {
-            var user = data.passport.user;
-        } else {
-            user = undefined;
-        }
-
-        console.log(user);
-
-        if (user != undefined) {
-            deserialize(user, done);
-        } else {
-            done("Wrong cookie");
-        }
-
-        //done(err, rows[0]);
-    });
+export function loginWithSessionId(request, done) {
+  var user = hasPassportUser(request);
+  if (user) {
+      deserialize(user,done);
+  } else {
+      done("No WRIO user found")
+  }
 }
 
 export function getTwitterCredentials(request) {
@@ -63,9 +45,9 @@ export function getTwitterCredentials(request) {
 
 
 
-export function getLoggedInUser(ssid) {
+export function getLoggedInUser(request) {
     return new Promise((resolve, reject) => {
-        loginWithSessionId(ssid, (err, res) => {
+        loginWithSessionId(request, (err, res) => {
             if (err) {
                 return reject(err);
             }
@@ -107,11 +89,11 @@ export let wrap = fn => (...args) => fn(...args).catch(args[2]);
 
 export function wrioAuth(req,resp,next) {
 
-    loginWithSessionId(req.sessionID, (err, user) => {
+    loginWithSessionId(req, (err, user) => {
         if (err) {
-            console.log("Permission denied",e);
-            dumpError(e);
-            return resp.status(403).send("Error");
+            console.log("Permission denied",err);
+            dumpError(err);
+            return resp.status(401).send("Not authorized");
         }
         req.user = user;
         next();

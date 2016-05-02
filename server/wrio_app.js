@@ -1,23 +1,17 @@
-import bodyParser from 'body-parser';
 import nconf from 'nconf';
 import logger from 'winston';
 
-var exports = module.exports = {};
 
-exports.init = function (express) {
-    var app = express();
+export default function init_cors (app) {
 
-    app.use(function (request, response, next) {
+    // Add headers
+    app.use(function(request, response, next) {
+
+        //console.log(request);
         var host = request.get('origin');
         if (host == undefined) host = "";
-        logger.log('debug','Got host:',host);
 
-        var domain = nconf.get("db:workdomain");
-
-        if (host.match(/^localhost:[0-9]+$/m)) {
-            response.setHeader('Access-Control-Allow-Origin', host);
-            logger.log("debug","Allowing CORS for localhost");
-        }
+        var domain = nconf.get("server:workdomain");
 
         domain = domain.replace(/\./g,'\\.')+'$';
         logger.log('silly',domain);
@@ -34,7 +28,5 @@ exports.init = function (express) {
         response.setHeader('Access-Control-Allow-Credentials', true);
         next();
     });
-    app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({extended: true}));
     return app;
 };
