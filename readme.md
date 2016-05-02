@@ -24,7 +24,10 @@ var dbInstance =  await db.init();
 Then you can create express application
 
 ```
-var app = server.initserv(dbInstance);
+import express from 'express';
+
+app = express();
+server.initserv(dbInstance);
 app.listen(nconf.get("server:port"));
 ```
 

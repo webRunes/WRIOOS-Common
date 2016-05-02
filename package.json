@@ -2,9 +2,10 @@
   "name": "wriocommon",
   "version": "1.0.0",
   "description": "Wrio backend common functions",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "postinstall": "gulp babel"
   },
   "browserify": {
     "transform": [
