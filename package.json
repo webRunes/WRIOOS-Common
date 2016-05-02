@@ -2,9 +2,11 @@
   "name": "wriocommon",
   "version": "1.0.0",
   "description": "Wrio backend common functions",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "compile": "babel index.js login server utils --presets babel-preset-es2015 --out-dir dist",
+    "postinstall": "npm run compile"
   },
   "browserify": {
     "transform": [
