@@ -1,12 +1,12 @@
 /**
  * Created by michbil on 02.05.16.
  */
-import nconf from './server/wrio_nconf.js';
+import nconf from './src/server/wrio_nconf.js';
 import {server,db,utils,login} from './src/index.js';
 import logger from 'winston';
 import express from 'express';
 
-import index from './index.js';
+import index from './src/index.js';
 
 var app = express();
 
@@ -28,6 +28,13 @@ async function init () {
 
         response.send("Testing request for non-temporary wrio users");
     });
+
+    app.get('/wrio_s2s', login.authS2S, function (request, response) {
+        console.log(request.session);
+        response.send("Testing S2S auth");
+    });
+
+
     app.listen(nconf.get("server:port"));
 }
 
