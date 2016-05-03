@@ -1,7 +1,7 @@
 import {dumpError} from './utils/utils.js';
 import {init} from './utils/db.js';
 import db from './utils/db.js';
-import {loginWithSessionId,wrioAuth,wrap} from './login';
+import {loginWithSessionId,wrioAuth,wrap,authS2S} from './login';
 import app from './server/wrio_app.js';
 import initserv from './server/initserv.js';
 
@@ -15,6 +15,7 @@ exports.db = {
 exports.login = {
     loginWithSessionId:loginWithSessionId,
     wrioAuth:wrioAuth,
+    authS2S:authS2S,
     wrap: wrap
 };
 exports.wrio_app = app;
