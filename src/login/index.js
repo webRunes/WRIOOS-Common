@@ -1,6 +1,8 @@
 import db from '../utils/db';
 import nconf from 'nconf';
 import {dumpError} from "../utils/utils.js";
+import auth from 'basic-auth';
+
 
 function hasPassportUser(request) {
     var sessionData = request.session;
@@ -47,6 +49,20 @@ export function getLoggedInUser(request) {
             resolve(res);
         });
     });
+}
+
+export function authS2S(request,response,next) {
+    var creds = auth(request);
+    var login = nconf.get("service2service:login");
+    var password = nconf.get("service2service:password");
+    if (creds && login && password) {
+        if ((creds.name === login) && (creds.pass === password)) {
+            next();
+            return;
+        }
+    }
+    console.log("Access denied");
+    response.status(403).send("Access denied");
 }
 
 /*
