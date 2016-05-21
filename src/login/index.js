@@ -120,3 +120,25 @@ export function wrioAdmin(req,resp,next) {
     });
 
 }
+
+const allowedServices = ['core','login','titter','storage','webgold'];
+
+export function restOnly(request,response) {
+    if (!(request.get('X-Requested-With') === "XMLHttpRequest")) {
+        response.status(403).send("Only REST requests allowed");
+        return;
+    }
+    var origin = request.get('origin');
+    var domain = nconf.get("server:workdomain");
+
+    if (origin) {
+        var exp = /^http(s)*:\/\/(core|login|webgold|titter|storage)\.wrioos\.com(\/)*$/g;
+        if (origin.matches(exp)) {
+            next();
+        }
+    } else {
+        response.status(403).send("Forbidden");
+    }
+
+
+}
