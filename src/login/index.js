@@ -123,7 +123,7 @@ export function wrioAdmin(req,resp,next) {
 
 const allowedServices = ['core','login','titter','storage','webgold'];
 
-export function restOnly(request,response) {
+export function restOnly(request,response,next) {
     if (!(request.get('X-Requested-With') === "XMLHttpRequest")) {
         response.status(403).send("Only REST requests allowed");
         return;
