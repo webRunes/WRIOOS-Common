@@ -30,3 +30,4 @@ export default function init_cors (app) {
     });
     return app;
 };
+
