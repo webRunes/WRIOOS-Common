@@ -1,4 +1,4 @@
-require('babel/register');
+require('babel-core/register');
 
 var gulp = require('gulp');
 var babel = require('gulp-babel');
