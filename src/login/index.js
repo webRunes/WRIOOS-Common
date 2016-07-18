@@ -131,14 +131,16 @@ export function restOnly(request,response,next) {
     var origin = request.get('origin');
     var domain = nconf.get("server:workdomain");
 
-    if (origin) {
+    next();
+
+  /*  if (origin) {
         var exp = /^http(s)*:\/\/(core|login|webgold|titter|storage)\.wrioos\.com(\/)*$/g;
         if (origin.matches(exp)) {
             next();
         }
     } else {
         response.status(403).send("Forbidden");
-    }
+    }*/
 
 
 }
