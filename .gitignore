@@ -34,8 +34,6 @@ express
 /node_modules/*/node_modules
 node_modules/**/node_modules
 node_module/
-dist/
-/dist/
 comment.png
 *.swp
 config.json
