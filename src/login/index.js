@@ -1,7 +1,7 @@
-import db from '../utils/db';
-import nconf from 'nconf';
-import {dumpError} from "../utils/utils.js";
-import auth from 'basic-auth';
+const db = require('../utils/db');
+const nconf = require('nconf');
+const {dumpError} = require("../utils/utils.js");
+const auth = require('basic-auth');
 
 
 function hasPassportUser(request) {
@@ -28,7 +28,7 @@ function deserialize(id, done) {
     });
 };
 
-export function loginWithSessionId(request, done) {
+function loginWithSessionId(request, done) {
   var user = hasPassportUser(request);
   if (user) {
       deserialize(user,done);
@@ -40,7 +40,7 @@ export function loginWithSessionId(request, done) {
 
 
 
-export function getLoggedInUser(request) {
+function getLoggedInUser(request) {
     return new Promise((resolve, reject) => {
         loginWithSessionId(request, (err, res) => {
             if (err) {
@@ -51,7 +51,7 @@ export function getLoggedInUser(request) {
     });
 }
 
-export function authS2S(request,response,next) {
+function authS2S(request,response,next) {
     var creds = auth(request);
     var login = nconf.get("service2service:login");
     var password = nconf.get("service2service:password");
@@ -94,9 +94,9 @@ function isAdmin(id) {
     return result;
 }
 
-export let wrap = fn => (...args) => fn(...args).catch(args[2]);
+let wrap = fn => (...args) => fn(...args).catch(args[2]);
 
-export function wrioAuth(req,resp,next) {
+function wrioAuth(req,resp,next) {
 
     loginWithSessionId(req, (err, user) => {
         if (err) {
@@ -110,7 +110,7 @@ export function wrioAuth(req,resp,next) {
 
 }
 
-export function wrioAdmin(req,resp,next) {
+function wrioAdmin(req,resp,next) {
     wrioAuth(req,resp,() => {
         if (isAdmin(req.user.wrioID)) {
             next();
@@ -123,7 +123,7 @@ export function wrioAdmin(req,resp,next) {
 
 const allowedServices = ['core','login','titter','storage','webgold'];
 
-export function restOnly(request,response,next) {
+function restOnly(request,response,next) {
     if (!(request.get('X-Requested-With') === "XMLHttpRequest")) {
         response.status(403).send("Only REST requests allowed");
         return;
@@ -144,3 +144,11 @@ export function restOnly(request,response,next) {
 
 
 }
+module.exports = {
+    loginWithSessionId,
+    getLoggedInUser,
+    authS2S,
+    wrap,
+    restOnly,
+    wrioAdmin,
+    wrioAuth};

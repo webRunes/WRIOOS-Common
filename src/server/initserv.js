@@ -2,16 +2,16 @@
  * Created by michbil on 02.05.16.
  */
 
-import express from 'express';
-import bodyParser from 'body-parser';
-import nconf from 'nconf';
-import path from 'path';
-import MongoStore from 'connect-mongo';
-import session from 'express-session';
-import cookieParser from 'cookie-parser';
-import wrio_app from './wrio_app.js';
+const express = require('express');
+const bodyParser = require('body-parser');
+const nconf = require('nconf');
+const path = require('path');
+const MongoStore = require('connect-mongo');
+const session  = require('express-session');
+const cookieParser = require('cookie-parser');
+const wrio_app = require('./cors.js');
 
-export default function initserv(app,db) {
+function initserv(app,db) {
 
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
@@ -41,10 +41,9 @@ export default function initserv(app,db) {
             key: 'sid'
         }
     ));
-
     wrio_app(app);
-
     return app;
-
 }
+
+module.exports = initserv;
 
