@@ -1,11 +1,7 @@
 const nconf = require('nconf');
 const logger = require('winston');
+const CORSDomainMatch = require('./CORSDomainMatch');
 
-function CORSomainMatch(origin,domain) {
-    domain = domain.replace(/\./g,'\\.')+'$';console.log(domain);
-    logger.log('silly',domain);
-    return !!origin.match(new RegExp(domain,'m'));
-}
 
 module.exports = function init_cors (app) {
 
@@ -29,6 +25,3 @@ module.exports = function init_cors (app) {
     });
     return app;
 };
-
-console.log(CORSomainMatch('http://core_d.wrioos.com','.wrioos.com'));
-console.log(CORSomainMatch('http://core_d.wrioos.com:3033','.wrioos.com'));
