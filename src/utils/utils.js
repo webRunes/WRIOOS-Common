@@ -2,7 +2,7 @@
  * Created by michbil on 13.09.15.
  */
 
-export function dumpError(err) {
+function dumpError(err) {
     if (!err) return;
     if (typeof err === 'object') {
         if (err.message) {
@@ -15,3 +15,5 @@ export function dumpError(err) {
         }
     }
 }
+
+module.exports = {dumpError};

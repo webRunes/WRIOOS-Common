@@ -1,15 +1,12 @@
-import {MongoClient,ObjectID} from 'mongodb';
-import nconf from 'nconf';
-import logger from 'winston';
-
+const {MongoClient,ObjectID} = require('mongodb');
+const nconf = require('nconf');
+const logger = require('winston');
 
 let db = {
     db: {},
-    ObjectID: ObjectID
-} ;
-export default db;
+};
 
-export function init() {
+function init() {
 
     let url;
 
@@ -43,4 +40,10 @@ export function init() {
         });
     });
 }
+
+module.exports = {
+    db: db,
+    init: init,
+    default: db
+};
 

@@ -1,9 +1,9 @@
-import {dumpError} from './utils/utils.js';
-import {init} from './utils/db.js';
-import db from './utils/db.js';
-import {loginWithSessionId,wrioAuth,wrap,authS2S,wrioAdmin,restOnly} from './login';
-import app from './server/wrio_app.js';
-import initserv from './server/initserv.js';
+const {dumpError} = require( './utils/utils.js');
+const {init} = require('./utils/db.js');
+const db = require('./utils/db.js');
+const {loginWithSessionId,wrioAuth,wrap,authS2S,wrioAdmin,restOnly} = require('./login');
+const app = require('./server/cors.js');
+const initserv = require('./server/initserv.js');
 
 exports.utils = {
     dumpError: dumpError

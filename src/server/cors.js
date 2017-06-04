@@ -1,23 +1,18 @@
-import nconf from 'nconf';
-import logger from 'winston';
+const nconf = require('nconf');
+const logger = require('winston');
+const CORSDomainMatch = require('./CORSDomainMatch');
 
 
-export default function init_cors (app) {
+module.exports = function init_cors (app) {
 
     // Add headers
     app.use(function(request, response, next) {
+        let origin = request.get('origin');
+        if (origin == undefined) origin = "";
+        const workDomain = nconf.get("server:workdomain");
 
-        //console.log(request);
-        var host = request.get('origin');
-        if (host == undefined) host = "";
-
-        var domain = nconf.get("server:workdomain");
-
-        domain = domain.replace(/\./g,'\\.')+'$';
-        logger.log('silly',domain);
-
-        if (host.match(new RegExp(domain,'m'))) {
-            response.setHeader('Access-Control-Allow-Origin', host);
+        if (CORSomainMatch(origin,workDomain)) {
+            response.setHeader('Access-Control-Allow-Origin', origin);
             logger.log("debug","Allowing CORS for webrunes domains");
         } else {
             logger.log("debug",'host not match');
@@ -30,4 +25,3 @@ export default function init_cors (app) {
     });
     return app;
 };
-
