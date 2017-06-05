@@ -3,7 +3,7 @@ const nconf = require('nconf');
 const logger = require('winston');
 
 let db = {
-    db: {},
+    db: {}
 };
 
 function init() {
@@ -42,9 +42,6 @@ function init() {
         });
     });
 }
-
-module.exports = {
-    db: db, // few aliases, to support legacy clients
-    init: init,
-};
+db.init = init;
+module.exports = db;
 
