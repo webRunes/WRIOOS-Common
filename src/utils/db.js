@@ -3,15 +3,12 @@ const nconf = require('nconf');
 const logger = require('winston');
 
 let db = {
-    db: {},
+    db: null
 };
 
 function init() {
-
     let url;
-
     logger.debug(process.env.NODE_ENV);
-
     if (process.env.NODE_ENV == 'testing') {
         logger.info("Mongodb testing mode entered");
         url = 'mongodb://mongo:27017/webrunes_test';
@@ -22,10 +19,15 @@ function init() {
         let password = nconf.get('mongo:password');
         let mongodbname = nconf.get('mongo:dbname');
 
+
         if (user) {
             url = `mongodb://${user}:${password}@${host}/${mongodbname}`;
         } else {
             url = `mongodb://${host}/${mongodbname}`;
+        }
+
+        if (!host) {
+            throw new Error("Mongodb config not defined "+url);
         }
     }
 
@@ -41,9 +43,15 @@ function init() {
     });
 }
 
-module.exports = {
-    db: db,
-    init: init,
-    default: db
-};
+function getInstance() {
+    if (db.db == null) {
+        throw new Error("Db not ready yet!");
+    } else {
+        return db.db;
+    }
+}
+
+db.init = init;
+db.getInstance = getInstance;
+module.exports = db;
 

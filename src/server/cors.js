@@ -11,7 +11,7 @@ module.exports = function init_cors (app) {
         if (origin == undefined) origin = "";
         const workDomain = nconf.get("server:workdomain");
 
-        if (CORSomainMatch(origin,workDomain)) {
+        if (CORSDomainMatch(origin,workDomain)) {
             response.setHeader('Access-Control-Allow-Origin', origin);
             logger.log("debug","Allowing CORS for webrunes domains");
         } else {

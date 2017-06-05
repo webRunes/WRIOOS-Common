@@ -3,9 +3,9 @@
  */
 const logger = require('winston');
 
-function CORSomainMatch(origin,domain) {
+function CORSDomainMatch(origin,domain) {
     domain = domain.replace(/\./g,'\\.')+'(:3033)?$';
     logger.log('silly',domain);
     return !!origin.match(new RegExp(domain,'m'));
 }
-module.exports = CORSomainMatch;
+module.exports = CORSDomainMatch;
