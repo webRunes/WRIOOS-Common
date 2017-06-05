@@ -3,7 +3,7 @@ const nconf = require('nconf');
 const logger = require('winston');
 
 let db = {
-    db: {}
+    db: null
 };
 
 function init() {
@@ -42,6 +42,16 @@ function init() {
         });
     });
 }
+
+function getInstance() {
+    if (db.db == null) {
+        throw new Error("Db not ready yet!");
+    } else {
+        return db.db;
+    }
+}
+
 db.init = init;
+db.getInstance = getInstance;
 module.exports = db;
 
