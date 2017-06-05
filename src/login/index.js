@@ -2,6 +2,7 @@ const db = require('../utils/db');
 const nconf = require('nconf');
 const {dumpError} = require("../utils/utils.js");
 const auth = require('basic-auth');
+const {ObjectID} = require('mongodb');
 
 
 function hasPassportUser(request) {
@@ -18,7 +19,7 @@ function deserialize(id, done) {
     var webrunesUsers = db.db.collection('webRunes_Users');
     var sessions = db.db.collection('sessions');
     console.log("Deserializing user by id=" + id);
-    webrunesUsers.findOne(db.ObjectID(id),function (err,user) {
+    webrunesUsers.findOne(ObjectID(id),function (err,user) {
         if (err || !user) {
             console.log("User not found", err);
             done(err);
