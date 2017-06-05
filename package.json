@@ -2,7 +2,7 @@
   "name": "wriocommon",
   "version": "1.0.1",
   "description": "Wrio backend common functions",
-  "main": "dist/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "test"
   },
