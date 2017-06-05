@@ -7,11 +7,8 @@ let db = {
 };
 
 function init() {
-
     let url;
-
     logger.debug(process.env.NODE_ENV);
-
     if (process.env.NODE_ENV == 'testing') {
         logger.info("Mongodb testing mode entered");
         url = 'mongodb://mongo:27017/webrunes_test';
@@ -22,10 +19,15 @@ function init() {
         let password = nconf.get('mongo:password');
         let mongodbname = nconf.get('mongo:dbname');
 
+
         if (user) {
             url = `mongodb://${user}:${password}@${host}/${mongodbname}`;
         } else {
             url = `mongodb://${host}/${mongodbname}`;
+        }
+
+        if (!host) {
+            throw new Error("Mongodb config not defined "+url);
         }
     }
 
