@@ -45,8 +45,6 @@ function init() {
 
 module.exports = {
     db: db, // few aliases, to support legacy clients
-    dbConnection: db.db,
     init: init,
-    default: db
 };
 
