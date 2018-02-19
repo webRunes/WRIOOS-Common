@@ -1,5 +1,5 @@
 const {MongoClient,ObjectID} = require('mongodb');
-let nconf = require('nconf');
+const nconf = require('nconf');
 const logger = require('winston');
 
 let db = {
@@ -7,7 +7,6 @@ let db = {
 };
 
 function init(nconfig) {
-    nconf = nconfig || nconf;
     let url;
     logger.debug(process.env.NODE_ENV);
     if (process.env.NODE_ENV == 'testing') {
