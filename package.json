@@ -35,7 +35,7 @@
     "express": "4.14.0",
     "express-session": "^1.14.0",
     "mongodb": "^2.2.2",
-    "nconf": "^0.8.4",
+    "nconf": "0.8.5",
     "winston": "^2.1.1"
   },
   "devDependencies": {

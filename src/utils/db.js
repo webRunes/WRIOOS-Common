@@ -1,12 +1,13 @@
 const {MongoClient,ObjectID} = require('mongodb');
-const nconf = require('nconf');
+let nconf = require('nconf');
 const logger = require('winston');
 
 let db = {
     db: null
 };
 
-function init(nconfig) {
+function init(_) {
+    nconf = _ || nconf;
     let url;
     logger.debug(process.env.NODE_ENV);
     if (process.env.NODE_ENV == 'testing') {
